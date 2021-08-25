@@ -1,6 +1,6 @@
-name: sonarqube
+name: turbonomic
 type: terraform
-description: Module to install Sonarqube into a cluster
+description: Module to install Turbonomic
 tags:
     - tools
     - devops
@@ -50,7 +50,5 @@ versions:
       scope: global
     - name: gitops_dir
       scope: global
-    - name: postgresql
-      scope: ignore
     - name: plugins
       scope: ignore

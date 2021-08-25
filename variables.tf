@@ -22,6 +22,7 @@ variable "hostname" {
 
 variable "cluster_type" {
   description = "The cluster type (openshift or ocp3 or ocp4 or kubernetes)"
+  default = "ocp4"
 }
 
 variable "helm_version" {

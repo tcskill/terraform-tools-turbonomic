@@ -1,20 +1,33 @@
 
 locals {
+  name = turbo
   tmp_dir      = "${path.cwd}/.tmp"
   ingress_host = "${var.hostname}-${var.releases_namespace}.${var.cluster_ingress_hostname}"
-  ingress_url  = "https://${local.ingress_host}"
-  service_url  = "http://sonarqube-sonarqube.${var.releases_namespace}:9000"
-  secret_name  = "sonarqube-access"
-  config_name  = "sonarqube-config"
-  config_sa_name = "sonarqube-config"
-  gitops_dir   = var.gitops_dir != "" ? var.gitops_dir : "${path.cwd}/gitops"
-  chart_dir    = "${local.gitops_dir}/sonarqube"
-  global_config    = {
-    storageClass = var.storage_class
-    clusterType = var.cluster_type
-    ingressSubdomain = var.cluster_ingress_hostname
+  //ingress_url  = "https://${local.ingress_host}"
+  //service_url  = "http://sonarqube-sonarqube.${var.releases_namespace}:9000"
+  //secret_name  = "sonarqube-access"
+  //config_name  = "sonarqube-config"
+  //config_sa_name = "sonarqube-config"
+  //gitops_dir   = var.gitops_dir != "" ? var.gitops_dir : "${path.cwd}/gitops"
+  //chart_dir    = "${local.gitops_dir}/sonarqube"
+  //global_config    = {
+  //  storageClass = var.storage_class
+  //  clusterType = var.cluster_type
+  //  ingressSubdomain = var.cluster_ingress_hostname
+  //}
+
+  resource "null_resource" "create_storageclass" {
+    provisioner "local-exec" {
+      command = "${path.module}/scripts/createStorageClass.sh"
+
+      environment = {
+        KUBECONFIG = var.cluster_config_file
+      }
+    }
   }
-  sonarqube_config = {
+}
+
+  /* sonarqube_config = {
     image = {
       pullPolicy = "Always"
     }
@@ -29,7 +42,7 @@ locals {
     podLabels = {
       "app.kubernetes.io/part-of" = "sonarqube"
     }
-    postgresql = {
+     postgresql = {
       enabled = !var.postgresql.external
       postgresqlServer = var.postgresql.external ? var.postgresql.hostname : ""
       postgresqlDatabase = var.postgresql.external ? var.postgresql.database_name : "sonarDB"
@@ -57,7 +70,7 @@ locals {
           "app.kubernetes.io/part-of" = "sonarqube"
         }
       }
-    }
+    } 
     ingress = {
       enabled = var.cluster_type == "kubernetes"
       annotations = {
@@ -80,8 +93,8 @@ locals {
       install = var.plugins
     }
     enableTests = false
-  }
-  service_account_config = {
+  } 
+  /*service_account_config = {
     name = var.service_account_name
     create = false
     sccs = ["anyuid", "privileged"]
@@ -102,7 +115,7 @@ locals {
         ]
       }
     ]
-  }
+  } 
   ocp_route_config       = {
     nameOverride = "sonarqube"
     targetPort = "http"
@@ -128,7 +141,7 @@ locals {
       key  = "SONARQUBE_URL"
     }
   }
-}
+} 
 
 resource "null_resource" "setup-chart" {
   provisioner "local-exec" {
@@ -208,4 +221,4 @@ resource "null_resource" "wait-for-config-job" {
       KUBECONFIG = var.cluster_config_file
     }
   }
-}
+} */

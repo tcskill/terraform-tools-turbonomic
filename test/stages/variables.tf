@@ -18,6 +18,7 @@ variable "region" {
 variable "namespace" {
   type        = string
   description = "Namespace for tools"
+  default = "turbonomic"
 }
 
 variable "cluster_name" {
