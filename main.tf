@@ -25,7 +25,17 @@ locals {
       }
     }
   }
+  
+  /* resource "null_resource" "delete_storageclass" {
+    provisioner "local-exec" {
+      when = destroy
+      command = "${path.module}/scripts/deleteStorageClass.sh ${path.module}/scripts"
 
+      environment = {
+        KUBECONFIG = var.cluster_config_file
+      }
+    }
+  } */
 
   /* sonarqube_config = {
     image = {
