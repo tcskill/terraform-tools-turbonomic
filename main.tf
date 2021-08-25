@@ -14,7 +14,7 @@ locals {
   //  storageClass = var.storage_class
   //  clusterType = var.cluster_type
   //  ingressSubdomain = var.cluster_ingress_hostname
-  //}
+  }
 
   resource "null_resource" "create_storageclass" {
     provisioner "local-exec" {
@@ -25,7 +25,7 @@ locals {
       }
     }
   }
-}
+
 
   /* sonarqube_config = {
     image = {
