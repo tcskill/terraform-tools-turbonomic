@@ -1,6 +1,6 @@
 
 locals {
-  name = turbo
+  name = "turbo"
   tmp_dir      = "${path.cwd}/.tmp"
   ingress_host = "${var.hostname}-${var.releases_namespace}.${var.cluster_ingress_hostname}"
   //ingress_url  = "https://${local.ingress_host}"

@@ -1,4 +1,4 @@
-output "ingress_host" {
+/*output "ingress_host" {
   description = "The ingress host for the SonarQube instance"
   value       = local.ingress_host
   depends_on  = [helm_release.sonarqube]
@@ -32,4 +32,4 @@ output "namespace" {
   description = "The namespace where sonarqube has been installed"
   value       = var.releases_namespace
   depends_on  = [helm_release.sonarqube]
-}
+} */
