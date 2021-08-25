@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-MODULE_DIR=$(cd ".."; pwd -P)
+SCRIPT_DIR="./scripts"
 
-kubectl create -f "${MODULE_DIR}/scripts/storageclass-ibmc-vpc-block-10iops-mzr.yaml"
+kubectl create -f "${SCRIPT_DIR}/storageclass-ibmc-vpc-block-10iops-mzr.yaml"
