@@ -1,6 +1,5 @@
 
 locals {
-  namespace = var.namespace
   tmp_dir      = "${path.cwd}/.tmp"
   ingress_host = "${var.hostname}-${var.releases_namespace}.${var.cluster_ingress_hostname}"
   //scripts_dir      = "${path.cwd}/.tmp/${local.name}/scripts/${local.name}"
@@ -69,10 +68,11 @@ locals {
     depends_on = [null_resource.deploy_storageclass]
     triggers = {
       kubeconfig = var.cluster_config_file
+      namespace = var.namespace
     }
     
     provisioner "local-exec" {
-      command = "${path.module}/scripts/configSCC.sh t8c-operator ${local.namespace}"
+      command = "${path.module}/scripts/configSCC.sh t8c-operator ${self.triggers.namespace}"
 
       environment = {
         KUBECONFIG = self.triggers.kubeconfig
@@ -81,7 +81,7 @@ locals {
 
     provisioner "local-exec" {
       when = destroy
-      command = "${path.module}/scripts/configSCC.sh t8c-operator ${local.namespace} destroy"
+      command = "${path.module}/scripts/configSCC.sh t8c-operator ${self.triggers.namespace} destroy"
 
       environment = {
         KUBECONFIG = self.triggers.kubeconfig
