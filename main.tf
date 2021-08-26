@@ -3,7 +3,7 @@ locals {
   name = "turbo"
   tmp_dir      = "${path.cwd}/.tmp"
   ingress_host = "${var.hostname}-${var.releases_namespace}.${var.cluster_ingress_hostname}"
-  scripts_dir      = "${path.cwd}/.tmp/${local.name}/scripts/${local.name}"
+  //scripts_dir      = "${path.cwd}/.tmp/${local.name}/scripts/${local.name}"
   //ingress_url  = "https://${local.ingress_host}"
   //service_url  = "http://sonarqube-sonarqube.${var.releases_namespace}:9000"
   //secret_name  = "sonarqube-access"
@@ -27,7 +27,7 @@ locals {
     }
   }
   
-  /* resource "null_resource" "delete_storageclass" {
+  resource "null_resource" "delete_storageclass" {
     provisioner "local-exec" {
       when = destroy
       command = "${path.module}/scripts/deleteStorageClass.sh ${path.module}/scripts"
@@ -36,7 +36,7 @@ locals {
         KUBECONFIG = var.cluster_config_file
       }
     }
-  } */
+  } 
 
   /* sonarqube_config = {
     image = {
