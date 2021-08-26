@@ -33,7 +33,7 @@ locals {
 
     provisioner "local-exec" {
       when = destroy
-      command = "${path.module}/scripts/configStorageClass.sh -d"
+      command = "${path.module}/scripts/configStorageClass.sh destroy"
 
       environment = {
         KUBECONFIG = self.triggers.kubeconfig
