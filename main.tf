@@ -17,7 +17,7 @@ locals {
   //  ingressSubdomain = var.cluster_ingress_hostname
   }
 
-  resource "null_resource" "create_storageclass" {
+  resource "null_resource" "deploy_storageclass" {
     provisioner "local-exec" {
       command = "${path.module}/scripts/configStorageClass.sh"
 
@@ -25,9 +25,7 @@ locals {
         KUBECONFIG = var.cluster_config_file
       }
     }
-  }
-  
-  resource "null_resource" "delete_storageclass" {
+
     provisioner "local-exec" {
       when = destroy
       command = "${path.module}/scripts/configStorageClass.sh -d"
@@ -36,7 +34,11 @@ locals {
         KUBECONFIG = var.cluster_config_file
       }
     }
-  } 
+  }
+  
+  
+
+  
 
   /* sonarqube_config = {
     image = {
