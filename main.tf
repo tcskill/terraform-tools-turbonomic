@@ -18,11 +18,16 @@ locals {
   }
 
   resource "null_resource" "deploy_storageclass" {
+    
+    triggers = {
+      kubeconfig = var.cluster_config_file
+    }
+    
     provisioner "local-exec" {
       command = "${path.module}/scripts/configStorageClass.sh"
 
       environment = {
-        KUBECONFIG = var.cluster_config_file
+        KUBECONFIG = self.triggers.kubeconfig
       }
     }
 
@@ -31,7 +36,7 @@ locals {
       command = "${path.module}/scripts/configStorageClass.sh -d"
 
       environment = {
-        KUBECONFIG = var.cluster_config_file
+        KUBECONFIG = self.triggers.kubeconfig
       }
     }
   }
