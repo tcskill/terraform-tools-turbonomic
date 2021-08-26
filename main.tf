@@ -72,7 +72,7 @@ locals {
     }
     
     provisioner "local-exec" {
-      command = "${path.module}/scripts/configSCC.sh turbonomic ${locals.namespace}"
+      command = "${path.module}/scripts/configSCC.sh t8c-operator ${locals.namespace}"
 
       environment = {
         KUBECONFIG = self.triggers.kubeconfig
@@ -81,7 +81,7 @@ locals {
 
     provisioner "local-exec" {
       when = destroy
-      command = "${path.module}/scripts/configSCC.sh turbonomic ${locals.namespace} destroy"
+      command = "${path.module}/scripts/configSCC.sh t8c-operator ${locals.namespace} destroy"
 
       environment = {
         KUBECONFIG = self.triggers.kubeconfig
