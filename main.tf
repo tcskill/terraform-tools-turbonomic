@@ -57,7 +57,7 @@ locals {
 
     provisioner "local-exec" {
       when = destroy
-      command = "${path.module}/scripts/configClusterRole..sh destroy"
+      command = "${path.module}/scripts/configClusterRole.sh destroy"
 
       environment = {
         KUBECONFIG = self.triggers.kubeconfig
