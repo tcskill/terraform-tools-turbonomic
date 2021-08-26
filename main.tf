@@ -19,7 +19,7 @@ locals {
 
   resource "null_resource" "create_storageclass" {
     provisioner "local-exec" {
-      command = "${path.module}/scripts/createStorageClass.sh"
+      command = "${path.module}/scripts/configStorageClass.sh"
 
       environment = {
         KUBECONFIG = var.cluster_config_file
@@ -30,7 +30,7 @@ locals {
   resource "null_resource" "delete_storageclass" {
     provisioner "local-exec" {
       when = destroy
-      command = "${path.module}/scripts/deleteStorageClass.sh ${path.module}/scripts"
+      command = "${path.module}/scripts/configStorageClass.sh -d"
 
       environment = {
         KUBECONFIG = var.cluster_config_file
