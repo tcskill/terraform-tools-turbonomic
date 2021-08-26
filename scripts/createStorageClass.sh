@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-SCRIPT_DIR="$0"
+SCRIPT_DIR=$(cd $(dirname $0)); pwd -P)
 
-kubectl create -f ${SCRIPT_DIR}/storageclass-ibmc-vpc-block-10iops-mzr.yaml
+kubectl create -f "${SCRIPT_DIR}/storageclass-ibmc-vpc-block-10iops-mzr.yaml"

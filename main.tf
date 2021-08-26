@@ -19,7 +19,7 @@ locals {
 
   resource "null_resource" "create_storageclass" {
     provisioner "local-exec" {
-      command = "${path.module}/scripts/createStorageClass.sh '${local.scripts_dir}'"
+      command = "${path.module}/scripts/createStorageClass.sh"
 
       environment = {
         KUBECONFIG = var.cluster_config_file
