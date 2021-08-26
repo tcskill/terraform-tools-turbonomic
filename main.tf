@@ -1,6 +1,6 @@
 
 locals {
-  name = "turbo"
+  namespace = var.namespace
   tmp_dir      = "${path.cwd}/.tmp"
   ingress_host = "${var.hostname}-${var.releases_namespace}.${var.cluster_ingress_hostname}"
   //scripts_dir      = "${path.cwd}/.tmp/${local.name}/scripts/${local.name}"
@@ -65,6 +65,29 @@ locals {
     }
   } 
 
+   resource "null_resource" "add_scc" {
+    depends_on = [null_resource.deploy_storageclass]
+    triggers = {
+      kubeconfig = var.cluster_config_file
+    }
+    
+    provisioner "local-exec" {
+      command = "${path.module}/scripts/configSCC.sh turbonomic ${locals.namespace}"
+
+      environment = {
+        KUBECONFIG = self.triggers.kubeconfig
+      }
+    }
+
+    provisioner "local-exec" {
+      when = destroy
+      command = "${path.module}/scripts/configSCC.sh turbonomic ${locals.namespace} destroy"
+
+      environment = {
+        KUBECONFIG = self.triggers.kubeconfig
+      }
+    }
+  } 
   
 
   /* sonarqube_config = {
