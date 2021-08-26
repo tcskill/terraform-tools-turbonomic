@@ -3,6 +3,7 @@ locals {
   name = "turbo"
   tmp_dir      = "${path.cwd}/.tmp"
   ingress_host = "${var.hostname}-${var.releases_namespace}.${var.cluster_ingress_hostname}"
+  scripts_dir      = "${path.cwd}/.tmp/${local.name}/scripts/${local.name}"
   //ingress_url  = "https://${local.ingress_host}"
   //service_url  = "http://sonarqube-sonarqube.${var.releases_namespace}:9000"
   //secret_name  = "sonarqube-access"
@@ -18,7 +19,7 @@ locals {
 
   resource "null_resource" "create_storageclass" {
     provisioner "local-exec" {
-      command = "${path.module}/scripts/createStorageClass.sh ${path.module}/scripts"
+      command = "${path.module}/scripts/createStorageClass.sh '${local.scripts_dir}'"
 
       environment = {
         KUBECONFIG = var.cluster_config_file
