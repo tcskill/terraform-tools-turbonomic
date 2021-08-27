@@ -37,7 +37,7 @@ variable "helm_version" {
   default     = "6.4.1"
 }
 
-variable "service_account_name" {
+variable "turbo_service_account_name" {
   description = "The name of the service account that should be used for the deployment"
   type        = string
   default     = "t8c-operator"
