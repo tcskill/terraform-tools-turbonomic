@@ -4,10 +4,10 @@ variable "cluster_config_file" {
   description = "Cluster config file for Kubernetes cluster."
 }
 
-//variable "releases_namespace" {
-//  type        = string
-//  description = "Name of the existing namespace where the Helm Releases will be deployed."
-//}
+variable "releases_namespace" {
+  type        = string
+  description = "Name of the existing namespace where the Helm Releases will be deployed."
+}
 
 variable "turbo_namespace" {
   type        = string
