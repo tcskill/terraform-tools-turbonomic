@@ -7,5 +7,6 @@ module "tools_turbo" {
   tls_secret_name          = module.dev_cluster.platform.tls_secret
   namespace                = module.dev_capture_state.namespace
   service_account_name     = "turbo8c-turbo8c"
+  turbo_namespace          = var.turbo_namespace
 
 }

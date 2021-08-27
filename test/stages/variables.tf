@@ -220,7 +220,7 @@ variable "ibm-vpc-subnets_acl_rules" {
   description = "The namespace that should be created"
   default = "tools"
 }*/
-variable "namespace" {
+variable "turbo_namespace" {
   type = string
   description = "The namespace that should be created"
   default = "turbonomic"

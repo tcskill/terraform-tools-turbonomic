@@ -46,7 +46,9 @@ versions:
         id: namespace
         output: name
         discriminator: tools
-    - name: mode
+    - name: turbo_namespace
+      scope: global
+      name: mode
       scope: global
     - name: gitops_dir
       scope: global

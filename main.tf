@@ -68,7 +68,7 @@ locals {
     depends_on = [null_resource.deploy_storageclass]
     triggers = {
       kubeconfig = var.cluster_config_file
-      namespace = var.namespace
+      namespace = var.turbo_namespace
     }
     
     provisioner "local-exec" {
