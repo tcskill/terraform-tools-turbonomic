@@ -220,11 +220,6 @@ variable "ibm-vpc-subnets_acl_rules" {
   description = "The namespace that should be created"
   default = "tools"
 }*/
-variable "turbo_namespace" {
-  type = string
-  description = "The namespace that should be created"
-  default = "turbonomic"
-}
 variable "namespace_create_operator_group" {
   type = bool
   description = "Flag indicating that an operator group should be created in the namespace"
@@ -414,4 +409,14 @@ variable "tekton_provision" {
   type = bool
   description = "Flag indicating that Tekton should be provisioned"
   default = true
+}
+variable "turbo_namespace" {
+  type = string
+  description = "The namespace that should be created"
+  default = "turbonomic"
+}
+variable "turbo_service_account_name" {
+  type = string
+  description = "The namespace that should be created"
+  default = "t8c-operator"
 }
