@@ -89,7 +89,7 @@ resource null_resource install_helm_chart {
     provisioner "local-exec" {
       //command = "${local.bin_dir}/helm install ..."
       // helm template service-account service-account --repo https://charts.cloudnativetoolkit.dev --set "name=${SANAME}" --set "sccs[0]=anyuid" --set create=true --set "-n=${NAMESPACE}" > "${TMP_DIR}/turboscc.yaml"
-      command = "${local.bin_dir}/helm template service-account service-account --repo https://charts.cloudnativetoolkit.dev --set 'name=t8c-operator' --set 'sccs[0]=anyuid' --set create=true --set '-n=${self.triggers.namespace}' > '${self.triggers.tmp_dir}/turboscc.yaml'"
+      command = "${local.bin_dir}/helm template service-account --repo https://charts.cloudnativetoolkit.dev --set 'name=t8c-operator' --set 'sccs[0]=anyuid' --set create=true --set '-n=${self.triggers.namespace}' > '${self.triggers.tmp_dir}/turboscc.yaml'"
     }
 
     provisioner "local-exec" {
