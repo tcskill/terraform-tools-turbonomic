@@ -1,5 +1,6 @@
 
 locals {
+  bin_dir = module.setup_clis.bin_dir
   tmp_dir      = "${path.cwd}/.tmp"
   ingress_host = "${var.hostname}-${var.releases_namespace}.${var.cluster_ingress_hostname}"
   //scripts_dir      = "${path.cwd}/.tmp/${local.name}/scripts/${local.name}"
@@ -16,6 +17,19 @@ locals {
   //  ingressSubdomain = var.cluster_ingress_hostname
   }
 
+  
+module setup_clis {
+  source = "github.com/cloud-native-toolkit/terraform-util-clis.git"
+
+  clis = ["helm"]
+}
+
+resource null_resource install_helm_chart {
+  provisioner "local-exec" {
+    command = "${local.bin_dir}/helm install ..."
+  }
+}
+  
   resource "null_resource" "deploy_storageclass" {
     
     triggers = {
@@ -69,8 +83,15 @@ locals {
     triggers = {
       kubeconfig = var.cluster_config_file
       namespace = var.turbo_namespace
+      tmp_dir      = "${path.cwd}/.tmp"
     }
     
+    provisioner "local-exec" {
+      //command = "${local.bin_dir}/helm install ..."
+      // helm template service-account service-account --repo https://charts.cloudnativetoolkit.dev --set "name=${SANAME}" --set "sccs[0]=anyuid" --set create=true --set "-n=${NAMESPACE}" > "${TMP_DIR}/turboscc.yaml"
+      command = "${local.bin_dir}/helm template service-account service-account --repo https://charts.cloudnativetoolkit.dev --set 'name=t8c-operator' --set 'sccs[0]=anyuid' --set create=true --set '-n=${self.triggers.namespace}' > '${self.triggers.tmp_dir}/turboscc.yaml'"
+    }
+
     provisioner "local-exec" {
       command = "${path.module}/scripts/configSCC.sh t8c-operator ${self.triggers.namespace}"
 
