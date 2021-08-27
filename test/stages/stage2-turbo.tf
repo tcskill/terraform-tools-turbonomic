@@ -6,7 +6,7 @@ module "tools_turbo" {
   cluster_ingress_hostname = module.dev_cluster.platform.ingress
   tls_secret_name          = module.dev_cluster.platform.tls_secret
   namespace                = module.dev_capture_state.namespace
-  service_account_name     = "turbo8c-turbo8c"
+  service_account_name     = var.turbo_service_account_name
   turbo_namespace          = var.turbo_namespace
 
 }
