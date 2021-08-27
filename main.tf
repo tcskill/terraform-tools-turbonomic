@@ -93,7 +93,7 @@ resource null_resource install_helm_chart {
     }
 
     provisioner "local-exec" {
-      command = "${path.module}/scripts/configSCC.sh t8c-operator ${self.triggers.namespace}"
+      command = "${path.module}/scripts/configSCC.sh ${self.triggers.namespace}"
 
       environment = {
         KUBECONFIG = self.triggers.kubeconfig
@@ -102,7 +102,7 @@ resource null_resource install_helm_chart {
 
     provisioner "local-exec" {
       when = destroy
-      command = "${path.module}/scripts/configSCC.sh t8c-operator ${self.triggers.namespace} destroy"
+      command = "${path.module}/scripts/configSCC.sh ${self.triggers.namespace} destroy"
 
       environment = {
         KUBECONFIG = self.triggers.kubeconfig
