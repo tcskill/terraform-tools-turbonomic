@@ -83,7 +83,7 @@ resource null_resource install_helm_chart {
     triggers = {
       kubeconfig = var.cluster_config_file
       namespace = var.turbo_namespace
-      tsaname = var.service_account_name
+      tsaname = var.turbo_service_account_name
       tmp_dir      = "${path.cwd}/.tmp"
       bin_dir = module.setup_clis.bin_dir
     }
