@@ -24,100 +24,81 @@ module setup_clis {
   clis = ["helm"]
 }
 
-resource null_resource install_helm_chart {
+resource "null_resource" "deploy_storageclass" {
+    
+  triggers = {
+    kubeconfig = var.cluster_config_file
+  }
+    
   provisioner "local-exec" {
-    command = "${local.bin_dir}/helm install ..."
+    command = "${path.module}/scripts/configStorageClass.sh"
+
+      environment = {
+      KUBECONFIG = self.triggers.kubeconfig
+    }
+  }
+
+  provisioner "local-exec" {
+    when = destroy
+    command = "${path.module}/scripts/configStorageClass.sh destroy"
+
+    environment = {
+      KUBECONFIG = self.triggers.kubeconfig
+    }
   }
 }
   
-  resource "null_resource" "deploy_storageclass" {
-    
-    triggers = {
-      kubeconfig = var.cluster_config_file
-    }
-    
-    provisioner "local-exec" {
-      command = "${path.module}/scripts/configStorageClass.sh"
+resource "null_resource" "deploy_ClusterRole" {
+  depends_on = [null_resource.deploy_storageclass]
+  triggers = {
+    kubeconfig = var.cluster_config_file
+  }
 
-      environment = {
-        KUBECONFIG = self.triggers.kubeconfig
-      }
-    }
+  provisioner "local-exec" {
+    command = "${path.module}/scripts/configClusterRole.sh"
 
-    provisioner "local-exec" {
-      when = destroy
-      command = "${path.module}/scripts/configStorageClass.sh destroy"
-
-      environment = {
-        KUBECONFIG = self.triggers.kubeconfig
-      }
+    environment = {
+      KUBECONFIG = self.triggers.kubeconfig
     }
   }
-  
-   resource "null_resource" "deploy_ClusterRole" {
-    depends_on = [null_resource.deploy_storageclass]
-    triggers = {
-      kubeconfig = var.cluster_config_file
+
+  provisioner "local-exec" {
+    when = destroy
+    command = "${path.module}/scripts/configClusterRole.sh destroy"
+
+    environment = {
+      KUBECONFIG = self.triggers.kubeconfig
     }
+  }
+} 
+
+resource "null_resource" "add_scc" {
+  depends_on = [null_resource.deploy_storageclass]
+  triggers = {
+    kubeconfig = var.cluster_config_file
+    namespace = var.turbo_namespace
+    saname = var.turbo_service_account_name
+    tmp_dir      = "${path.cwd}/.tmp"
+    bin_dir = module.setup_clis.bin_dir
+  }
     
-    provisioner "local-exec" {
-      command = "${path.module}/scripts/configClusterRole.sh"
+  provisioner "local-exec" {
+    command = "${path.module}/scripts/configSCC.sh ${self.triggers.bin_dir} ${self.triggers.tsaname} ${self.triggers.namespace}"
 
-      environment = {
-        KUBECONFIG = self.triggers.kubeconfig
-      }
+    environment = {
+      KUBECONFIG = self.triggers.kubeconfig
     }
+  }
 
-    provisioner "local-exec" {
-      when = destroy
-      command = "${path.module}/scripts/configClusterRole.sh destroy"
-
-      environment = {
-        KUBECONFIG = self.triggers.kubeconfig
-      }
-    }
-  } 
-
-   resource "null_resource" "add_scc" {
-    depends_on = [null_resource.deploy_storageclass]
-    triggers = {
-      kubeconfig = var.cluster_config_file
-      namespace = var.turbo_namespace
-      tsaname = var.turbo_service_account_name
-      tmp_dir      = "${path.cwd}/.tmp"
-      bin_dir = module.setup_clis.bin_dir
-    }
+  provisioner "local-exec" {
+    when = destroy
+    command = "${path.module}/scripts/configSCC.sh ${self.triggers.bin_dir} ${self.triggers.tsaname} ${self.triggers.namespace} destroy"
     
-    //provisioner "local-exec" {
-      //command = "${local.bin_dir}/helm install ..."
-      // helm template service-account service-account --repo https://charts.cloudnativetoolkit.dev --set "name=${SANAME}" --set "sccs[0]=anyuid" --set create=true --set "-n=${NAMESPACE}" > "${TMP_DIR}/turboscc.yaml"
-      //command = "${local.bin_dir}/helm template service-account --repo https://charts.cloudnativetoolkit.dev --set 'name=t8c-operator' --set 'sccs[0]=anyuid' --set create=true --set '-n=${self.triggers.namespace}' > '${self.triggers.tmp_dir}/turboscc.yaml'"
-      //fromscript
-      //kubectl apply -f "${TMP_DIR}/turboscc.yaml" -n "${NAMESPACE}"
-      //see this
-      //helm template mychart {chart} --namespace {namespace} --repo https://charts.cloudnativetoolkit.dev ... | kubectl apply -n {namespace} -f -
-
-      
-     // command = "${self.triggers.bin_dir}/helm template service-account t8scc.yaml --repo https://charts.cloudnativetoolkit.dev --set 'name=${self.triggers.tsaname}' --set 'sccs[0]=anyuid' --set create=true --set '-n=${self.triggers.namespace}' | 'kubectl apply -n ${self.triggers.namespace} -f -'"
-    //}
-
-    provisioner "local-exec" {
-      command = "${path.module}/scripts/configSCC.sh ${self.triggers.bin_dir} ${self.triggers.tsaname} ${self.triggers.namespace}"
-
-      environment = {
-        KUBECONFIG = self.triggers.kubeconfig
-      }
+    environment = {
+      KUBECONFIG = self.triggers.kubeconfig
     }
-
-    provisioner "local-exec" {
-      when = destroy
-      command = "${path.module}/scripts/configSCC.sh ${self.triggers.bin_dir} ${self.triggers.tsaname} ${self.triggers.namespace} destroy"
-      //command = "${self.triggers.bin_dir}/helm template service-account --repo https://charts.cloudnativetoolkit.dev --set 'name=${self.triggers.tsaname}' --set 'sccs[0]=anyuid' --set create=true --set '-n=${self.triggers.namespace}' | 'kubectl delete -n ${self.triggers.namespace} -f -'"
-      environment = {
-        KUBECONFIG = self.triggers.kubeconfig
-      }
-    }
-  } 
+  }
+} 
   
 
   /* sonarqube_config = {
