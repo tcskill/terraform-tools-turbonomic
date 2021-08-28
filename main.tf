@@ -102,7 +102,7 @@ resource null_resource install_helm_chart {
     //}
 
     provisioner "local-exec" {
-      command = "${path.module}/scripts/configSCC.sh ${self.triggers.tsaname} ${self.triggers.namespace}"
+      command = "${path.module}/scripts/configSCC.sh ${self.triggers.bin_dir} ${self.triggers.tsaname} ${self.triggers.namespace}"
 
       environment = {
         KUBECONFIG = self.triggers.kubeconfig
@@ -111,7 +111,7 @@ resource null_resource install_helm_chart {
 
     provisioner "local-exec" {
       when = destroy
-      command = "${path.module}/scripts/configSCC.sh ${self.triggers.tsaname} ${self.triggers.namespace} destroy"
+      command = "${path.module}/scripts/configSCC.sh ${self.triggers.bin_dir} ${self.triggers.tsaname} ${self.triggers.namespace} destroy"
       //command = "${self.triggers.bin_dir}/helm template service-account --repo https://charts.cloudnativetoolkit.dev --set 'name=${self.triggers.tsaname}' --set 'sccs[0]=anyuid' --set create=true --set '-n=${self.triggers.namespace}' | 'kubectl delete -n ${self.triggers.namespace} -f -'"
       environment = {
         KUBECONFIG = self.triggers.kubeconfig
