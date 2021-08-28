@@ -1,14 +1,14 @@
-# SonarQube terraform module
+#  TR-TEST terraform module
 
-![Verify and release module](https://github.com/ibm-garage-cloud/terraform-tools-sonarqube/workflows/Verify%20and%20release%20module/badge.svg)
+![Verify and release module](https://github.com/ibm-garage-cloud/blahblah-tools-sonarqube/workflows/Verify%20and%20release%20module/badge.svg)
 
-Deploys SonarQube into the cluster using the helm chart. By default, a Postgres instance is deployed
-into the cluster as well to support the SonarQube instance.
+Deploys blahblah into the cluster using the helm chart. By default, blahblah  s instance is deployed
+into the cluster as well to support the blahblah instance.
 
 ## Supported platforms
 
-- IKS
-- OCP 3.11
+- IKS????
+- OCP 3.11???
 - OCP 4.3
 
 ## Module dependencies
@@ -40,13 +40,13 @@ modules can help provide the required information:
 
 ```hcl-terraform
 module "dev_tools_sonarqube" {
-  source = "github.com/ibm-garage-cloud/terraform-tools-sonarqube.git?ref=v1.0.0"
+  source = "github.com/blahblah?ref=v1.0.0"
 
   cluster_type             = var.cluster_type
   cluster_ingress_hostname = module.dev_cluster.ingress_hostname
   cluster_config_file      = module.dev_cluster.config_file_path
   releases_namespace       = module.dev_cluster_namespaces.tools_namespace_name
-  service_account_name     = module.dev_serviceaccount_sonarqube.name
+  service_account_name     = module.dev_serviceaccount_blahblah.name
   tls_secret_name          = module.dev_cluster.tls_secret_name
 }
 ```
