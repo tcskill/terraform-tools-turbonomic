@@ -88,25 +88,31 @@ resource null_resource install_helm_chart {
       bin_dir = module.setup_clis.bin_dir
     }
     
-    provisioner "local-exec" {
+    //provisioner "local-exec" {
       //command = "${local.bin_dir}/helm install ..."
       // helm template service-account service-account --repo https://charts.cloudnativetoolkit.dev --set "name=${SANAME}" --set "sccs[0]=anyuid" --set create=true --set "-n=${NAMESPACE}" > "${TMP_DIR}/turboscc.yaml"
       //command = "${local.bin_dir}/helm template service-account --repo https://charts.cloudnativetoolkit.dev --set 'name=t8c-operator' --set 'sccs[0]=anyuid' --set create=true --set '-n=${self.triggers.namespace}' > '${self.triggers.tmp_dir}/turboscc.yaml'"
-      command = "${self.triggers.bin_dir}/helm template service-account --repo https://charts.cloudnativetoolkit.dev --set 'name=${self.triggers.tsaname}' --set 'sccs[0]=anyuid' --set create=true --set '-n=${self.triggers.namespace}' | 'kubectl apply -n ${self.triggers.namespace} -f -'"
-    }
+      //fromscript
+      //kubectl apply -f "${TMP_DIR}/turboscc.yaml" -n "${NAMESPACE}"
+      //see this
+      //helm template mychart {chart} --namespace {namespace} --repo https://charts.cloudnativetoolkit.dev ... | kubectl apply -n {namespace} -f -
 
-    /*provisioner "local-exec" {
-      command = "${path.module}/scripts/configSCC.sh ${self.triggers.namespace}"
+      
+     // command = "${self.triggers.bin_dir}/helm template service-account t8scc.yaml --repo https://charts.cloudnativetoolkit.dev --set 'name=${self.triggers.tsaname}' --set 'sccs[0]=anyuid' --set create=true --set '-n=${self.triggers.namespace}' | 'kubectl apply -n ${self.triggers.namespace} -f -'"
+    //}
+
+    provisioner "local-exec" {
+      command = "${path.module}/scripts/configSCC.sh ${self.triggers.tsaname} ${self.triggers.namespace}"
 
       environment = {
         KUBECONFIG = self.triggers.kubeconfig
       }
-    }*/
+    }
 
     provisioner "local-exec" {
       when = destroy
-      //command = "${path.module}/scripts/configSCC.sh ${self.triggers.namespace} destroy"
-      command = "${self.triggers.bin_dir}/helm template service-account --repo https://charts.cloudnativetoolkit.dev --set 'name=${self.triggers.tsaname}' --set 'sccs[0]=anyuid' --set create=true --set '-n=${self.triggers.namespace}' | 'kubectl delete -n ${self.triggers.namespace} -f -'"
+      command = "${path.module}/scripts/configSCC.sh ${self.triggers.tsaname} ${self.triggers.namespace} destroy"
+      //command = "${self.triggers.bin_dir}/helm template service-account --repo https://charts.cloudnativetoolkit.dev --set 'name=${self.triggers.tsaname}' --set 'sccs[0]=anyuid' --set create=true --set '-n=${self.triggers.namespace}' | 'kubectl delete -n ${self.triggers.namespace} -f -'"
       environment = {
         KUBECONFIG = self.triggers.kubeconfig
       }

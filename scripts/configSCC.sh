@@ -1,15 +1,19 @@
 #!/usr/bin/env bash
 
+BIN_DIR=$(cd $(dirname $0)/../bin2; pwd -P)
+
 if [[ -z "${TMP_DIR}" ]]; then
     TMP_DIR=".tmp"
 fi
 mkdir -p "${TMP_DIR}"
 
-NAMESPACE="$1"
 
-if [[ "$2" == "destroy" ]]; then
+SANAME="$1"
+NAMESPACE="$2"
+
+if [[ "$3" == "destroy" ]]; then
     echo "removing turbo scc..."
-    kubectl delete -f "${TMP_DIR}/turboscc.yaml" -n "${NAMESPACE}"
+    ${BIN_DIR}/helm template t8scc_chart service-account --repo https://charts.cloudnativetoolkit.dev --set "name=${SANAME}" --set sccs[0]=anyuid --set create=true --set "-n=${NAMESPACE}" | kubectl delete -n "${NAMESPACE}" -f -
 else 
-    kubectl apply -f "${TMP_DIR}/turboscc.yaml" -n "${NAMESPACE}"
+    ${BIN_DIR}/helm template t8scc_chart service-account --repo https://charts.cloudnativetoolkit.dev --set "name=${SANAME}" --set sccs[0]=anyuid --set create=true --set "-n=${NAMESPACE}" | kubectl apply -n "${NAMESPACE}" -f -
 fi
