@@ -24,7 +24,7 @@ cat > "${TMP_DIR}/operator.yaml" << EOL
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-name: t8c-operator
+  name: t8c-operator
   labels:
     app.kubernetes.io/name: t8c-operator
     app.kubernetes.io/instance: t8c-operator
