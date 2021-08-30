@@ -25,47 +25,47 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
 name: t8c-operator
-labels:
+  labels:
     app.kubernetes.io/name: t8c-operator
     app.kubernetes.io/instance: t8c-operator
     app.kubernetes.io/managed-by: operator-life
 
 spec:
-replicas: 1
-selector:
+  replicas: 1
+  selector:
     matchLabels:
-    name: t8c-operator
-template:
-    metadata:
-    labels:
-        name: t8c-operator
+      name: t8c-operator
+    template:
+        metadata:
+          labels:
+            name: t8c-operator
     spec:
-    serviceAccountName: ${SANAME}
-    containers:
-    - name: t8c-operator
+      serviceAccountName: ${SANAME}
+      containers:
+      - name: t8c-operator
         image: turbonomic/t8c-operator:42.0
         imagePullPolicy: Always
         env:
         - name: WATCH_NAMESPACE
-        valueFrom:
+          valueFrom:
             fieldRef:
-            fieldPath: metadata.namespace
+              fieldPath: metadata.namespace
         - name: POD_NAME
-        valueFrom:
+          valueFrom:
             fieldRef:
-            fieldPath: metadata.name
+              fieldPath: metadata.name
         - name: OPERATOR_NAME
-        value: "t8c-operator"
+          value: "t8c-operator"
         securityContext:
-        readOnlyRootFilesystem: true
-        capabilities:
+          readOnlyRootFilesystem: true
+          capabilities:
             drop:
-            - ALL
+              - ALL
         volumeMounts:
         - mountPath: /tmp
-        name: operator-tmpfs0
-    volumes:
-    - name: operator-tmpfs0
+          name: operator-tmpfs0
+      volumes:
+      - name: operator-tmpfs0
         emptyDir: {}
 EOL
     kubectl create -f "${TMP_DIR}/operator.yaml" -n ${NAMESPACE} --validate=false
