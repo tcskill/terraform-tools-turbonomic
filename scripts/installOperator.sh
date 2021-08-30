@@ -35,10 +35,10 @@ spec:
   selector:
     matchLabels:
       name: t8c-operator
-    template:
-        metadata:
-          labels:
-            name: t8c-operator
+  template:
+    metadata:
+      labels:
+        name: t8c-operator
     spec:
       serviceAccountName: ${SANAME}
       containers:
