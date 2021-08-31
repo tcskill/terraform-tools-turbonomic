@@ -423,5 +423,4 @@ variable "turbo_service_account_name" {
 variable "turbo_probes" {
   description = "The probes to deploy with turbonomic"
   type        = list(string)
-  default     = [""]
 }
