@@ -14,23 +14,23 @@ if [[ "$3" == "destroy" ]]; then
     # remove the the release
     kubectl delete -f "${TMP_DIR}/xl-release.yaml" -n ${NAMESPACE}
 else 
-    
+    cat "${CHARTS_DIR}/t8c-xl-release-mzr.yaml" > "${TMP_DIR}/xl-release.yaml"
     if [[ "${PROBES}" =~ kubeturbo ]]; then
-      cat "${CHARTS_DIR}/t8c-xl-release-mzr.yaml" > "${TMP_DIR}/xl-release.yaml" << EOL
+      cat ${TMP_DIR}/xl-release.yaml > "${TMP_DIR}/xl-release.yaml" << EOL
   kubeturbo:
     enabled: true
 EOL
     fi
 
     if [[ "${PROBES}" =~ openshiftingress ]]; then
-      cat "${CHARTS_DIR}/t8c-xl-release-mzr.yaml" > "${TMP_DIR}/xl-release.yaml" << EOL
+      cat ${TMP_DIR}/xl-release.yaml > "${TMP_DIR}/xl-release.yaml" << EOL
   openshiftingress:
     enabled: true
 EOL
     fi
 
     if [[ "${PROBES}" =~ instana ]]; then
-      cat "${CHARTS_DIR}/t8c-xl-release-mzr.yaml" > "${TMP_DIR}/xl-release.yaml" << EOL
+      cat ${TMP_DIR}/xl-release.yaml > "${TMP_DIR}/xl-release.yaml" << EOL
   instana:
     enabled: true
 EOL
