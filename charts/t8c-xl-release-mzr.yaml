@@ -44,12 +44,12 @@ spec:
 #    enabled: false
 #  hyperv:
 #    enabled: true
-  kubeturbo:
-    enabled: true
-  instana:
-    enabled: true
-  openshiftingress:
-    enabled: true
+#  kubeturbo:
+#    enabled: true
+#  instana:
+#    enabled: true
+#  openshiftingress:
+#    enabled: true
 #  netapp:
 #    enabled: true
 #  nutanix:

@@ -43,6 +43,12 @@ variable "turbo_service_account_name" {
   default     = "t8c-operator"
 }
 
+variable "turbo_probes" {
+  description = "The probes to deploy with turbonomic"
+  type        = list(string)
+  default     = ["kubeturbo","instana","openshiftingress"]
+}
+
 variable "plugins" {
   description = "The list of plugins that will be installed on SonarQube"
   type        = list(string)

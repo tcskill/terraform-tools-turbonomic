@@ -420,3 +420,8 @@ variable "turbo_service_account_name" {
   description = "The namespace that should be created"
   default = "t8c-operator"
 }
+variable "turbo_probes" {
+  description = "The probes to deploy with turbonomic"
+  type        = list(string)
+  default     = [""]
+}
