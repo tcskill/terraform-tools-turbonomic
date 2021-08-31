@@ -121,7 +121,7 @@ resource "null_resource" "deploy_instance" {
   }
 
   provisioner "local-exec" {
-    command = "${path.module}/scripts/deployInstance.sh ${self.triggers.tsaname} ${self.triggers.namespace}"
+    command = "${path.module}/scripts/deployInstance.sh ${self.triggers.namespace}"
 
     environment = {
       KUBECONFIG = self.triggers.kubeconfig
@@ -130,7 +130,7 @@ resource "null_resource" "deploy_instance" {
 
   provisioner "local-exec" {
     when = destroy
-    command = "${path.module}/scripts/deployInstance.sh ${self.triggers.tsaname} ${self.triggers.namespace} destroy"
+    command = "${path.module}/scripts/deployInstance.sh ${self.triggers.namespace} destroy"
 
     environment = {
       KUBECONFIG = self.triggers.kubeconfig
