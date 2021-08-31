@@ -117,7 +117,7 @@ resource "null_resource" "deploy_instance" {
   triggers = {
     kubeconfig = var.cluster_config_file
     namespace = var.turbo_namespace
-    probes = "'${join(",", var.turbo_probes)}'"
+    probes = "${join(",", var.turbo_probes)}"
   }
 
   provisioner "local-exec" {
