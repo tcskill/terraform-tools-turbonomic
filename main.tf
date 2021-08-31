@@ -112,3 +112,28 @@ resource "null_resource" "deploy_operator" {
   }
 } 
 
+resource "null_resource" "deploy_instance" {
+  depends_on = [null_resource.deploy_operator]
+  triggers = {
+    kubeconfig = var.cluster_config_file
+    namespace = var.turbo_namespace
+    tsaname = var.turbo_service_account_name
+  }
+
+  provisioner "local-exec" {
+    command = "${path.module}/scripts/deployInstance.sh ${self.triggers.tsaname} ${self.triggers.namespace}"
+
+    environment = {
+      KUBECONFIG = self.triggers.kubeconfig
+    }
+  }
+
+  provisioner "local-exec" {
+    when = destroy
+    command = "${path.module}/scripts/deployInstance.sh ${self.triggers.tsaname} ${self.triggers.namespace} destroy"
+
+    environment = {
+      KUBECONFIG = self.triggers.kubeconfig
+    }
+  }
+}
