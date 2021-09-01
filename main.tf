@@ -59,7 +59,7 @@ resource "null_resource" "deploy_ClusterRole" {
 } 
 
 resource "null_resource" "add_scc" {
-  depends_on = [module.namespaces, null_resource.deploy_storageclass]
+  depends_on = [null_resource.deploy_storageclass, null_resource.deploy_ClusterRole]
   triggers = {
     kubeconfig = var.cluster_config_file
     namespace = var.turbo_namespace
