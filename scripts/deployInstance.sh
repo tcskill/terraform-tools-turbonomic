@@ -19,7 +19,7 @@ else
     if [[ "${PROBES}" =~ kubeturbo ]]; then
       echo "adding kubeturbo probe..."
       cat >> ${TMP_DIR}/xl-release.yaml << EOL
-  
+
   kubeturbo:
     enabled: true
 EOL
