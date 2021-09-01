@@ -21,3 +21,78 @@ spec:
     #enableExternalSecrets: true
     storageClassName: ibmc-vpc-block-10iops-mzr
 
+# Component selector - Probes
+#  actionscript:
+#    enabled: true
+#  actionstream-kafka:
+#    enabled: false
+#  appdynamics:
+#    enabled: true
+#  appinsights:
+#    enabled: true
+#  aws:
+#    enabled: true
+#  azure:
+#    enabled: true
+#  dynatrace:
+#    enabled: true
+#  hpe3par:
+#    enabled: true
+#  horizon:
+#    enabled: false
+#  hyperflex:
+#    enabled: false
+#  hyperv:
+#    enabled: true
+# kubeturbo:
+#   enabled: true
+# instana:
+#   enabled: true
+# openshiftingress:
+#   enabled: true
+#  netapp:
+#    enabled: true
+#  nutanix:
+#    enabled: true
+#  oneview:
+#    enabled: true
+#  prometheus:
+#    enabled: true
+#  prometurbo:
+#    enabled: true
+#  pure:
+#    enabled: true
+#  scaleio:
+#    enabled: false
+#  servicenow:
+#    enabled: false
+#  ucs:
+#    enabled: true
+#  vcenter:
+#    enabled: true
+#  vmax:
+#    enabled: true
+#  vmm:
+#    enabled: true
+#  wmi:
+#    enabled: true
+#  snmp:
+#    enabled: true
+#  mssql:
+#    enabled: true
+#  mysql:
+#    enabled: false
+#  oracle:
+#    enabled: false
+#  tomcat:
+#    enabled: false
+#  jvm:
+#    enabled: false
+#  newrelic:
+#    enabled: true
+#  udt:
+#    enabled: true
+#  websphere:
+#    enabled: false
+#  weblogic:
+#    enabled: false
