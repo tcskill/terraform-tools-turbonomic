@@ -59,7 +59,7 @@ resource "null_resource" "deploy_ClusterRole" {
 } 
 
 resource "null_resource" "add_scc" {
-  depends_on = [module.namespace, null_resource.deploy_storageclass]
+  depends_on = [module.namespaces, null_resource.deploy_storageclass]
   triggers = {
     kubeconfig = var.cluster_config_file
     namespace = var.turbo_namespace
@@ -117,7 +117,8 @@ resource "null_resource" "deploy_instance" {
   triggers = {
     kubeconfig = var.cluster_config_file
     namespace = var.turbo_namespace
-    probes = "${join(",", var.turbo_probes)}"
+    //probes = "${join(",", var.turbo_probes)}"
+    probes = join(",", var.turbo_probes)
   }
 
   provisioner "local-exec" {
