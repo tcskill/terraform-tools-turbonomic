@@ -19,6 +19,7 @@ else
     if [[ "${PROBES}" =~ kubeturbo ]]; then
       echo "adding kubeturbo probe..."
       cat >> ${TMP_DIR}/xl-release.yaml << EOL
+  
   kubeturbo:
     enabled: true
 EOL
@@ -27,6 +28,7 @@ EOL
     if [[ "${PROBES}" =~ openshiftingress ]]; then
       echo "adding openshiftingress probe..."
       cat >> ${TMP_DIR}/xl-release.yaml << EOL
+  
   openshiftingress:
     enabled: true
 EOL
@@ -35,6 +37,7 @@ EOL
     if [[ "${PROBES}" =~ instana ]]; then
       echo "adding instana probe..."
       cat >> ${TMP_DIR}/xl-release.yaml << EOL
+  
   instana:
     enabled: true
 EOL
