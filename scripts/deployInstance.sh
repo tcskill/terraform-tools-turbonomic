@@ -14,7 +14,8 @@ if [[ "$3" == "destroy" ]]; then
     # remove the the release
     kubectl delete -f "${TMP_DIR}/xl-release.yaml" -n ${NAMESPACE}
 else 
-    cp "${CHARTS_DIR}/t8c-xl-release-mzr.yaml" "${TMP_DIR}/xl-release.yaml"
+    echo "copying... ${CHARTS_DIR}/t8c-xl-release-mzr.yaml ${TMP_DIR}/xl-release.yaml"
+    cp ${CHARTS_DIR}/t8c-xl-release-mzr.yaml ${TMP_DIR}/xl-release.yaml
     if [[ "${PROBES}" =~ kubeturbo ]]; then
       cat ${TMP_DIR}/xl-release.yaml > "${TMP_DIR}/xl-release.yaml" << EOL
   kubeturbo:
