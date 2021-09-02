@@ -424,3 +424,11 @@ variable "turbo_probes" {
   description = "The probes to deploy with turbonomic"
   type        = list(string)
 }
+variable "turbo_storage_class_provision" {
+  description = "Flag indicating that an ibm block custom storage class should be created and used"
+  type        = bool
+}
+variable "turbo_storage_class_name" {
+  description = "Name of the storage class to use"
+  type        = string
+}

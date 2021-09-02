@@ -49,6 +49,18 @@ variable "turbo_probes" {
   default     = ["kubeturbo","instana","openshiftingress"]
 }
 
+variable "turbo_storage_class_provision" {
+  description = "Flag indicating that an ibm block custom storage class should be created and used"
+  type        = bool
+  default     = true
+}
+
+variable "turbo_storage_class_name" {
+  description = "Name of the storage class to use"
+  type        = string
+  default     = "ibmc-vpc-block-10iops-mzr"
+}
+
 variable "plugins" {
   description = "The list of plugins that will be installed on SonarQube"
   type        = list(string)

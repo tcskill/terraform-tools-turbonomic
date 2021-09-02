@@ -7,15 +7,29 @@ mkdir -p "${TMP_DIR}"
 
 NAMESPACE="$1"
 PROBES="$2"
+STOR_NAME="$3"
 CHARTS_DIR=$(cd $(dirname $0)/../charts; pwd -P)
 
-if [[ "$3" == "destroy" ]]; then
+if [[ "$4" == "destroy" ]]; then
     echo "removing xl-release..."
     # remove the the release
     kubectl delete -f "${TMP_DIR}/xl-release.yaml" -n ${NAMESPACE}
 else 
+    cat > "${TMP_DIR}/xl-release.yaml" << EOL
+apiVersion: charts.helm.k8s.io/v1
+kind: Xl
+metadata:
+  name: xl-release
+spec:
+  global:
+    repository: turbonomic
+    tag: 8.2.3
+    externalArangoDBName: arango.turbo.svc.cluster.local
+    storageClassName: ${STOR_NAME}
 
-    cp "${CHARTS_DIR}/t8c-xl-release-mzr.yaml" "${TMP_DIR}/xl-release.yaml"
+EOL
+
+#    cp "${CHARTS_DIR}/t8c-xl-release-mzr.yaml" "${TMP_DIR}/xl-release.yaml"
     if [[ "${PROBES}" =~ kubeturbo ]]; then
       echo "adding kubeturbo probe..."
       cat >> ${TMP_DIR}/xl-release.yaml << EOL
@@ -44,6 +58,5 @@ EOL
     fi
     # deploy the release
     kubectl apply -f "${TMP_DIR}/xl-release.yaml" -n ${NAMESPACE}
-
 
 fi

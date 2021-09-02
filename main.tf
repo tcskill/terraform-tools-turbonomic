@@ -10,7 +10,7 @@ module setup_clis {
   clis = ["helm"]
 }
 
-resource "null_resource" "deploy_storageclass" {
+/*resource "null_resource" "deploy_storageclass" {
 
   triggers = {
     kubeconfig = var.cluster_config_file
@@ -27,6 +27,31 @@ resource "null_resource" "deploy_storageclass" {
   provisioner "local-exec" {
     when = destroy
     command = "${path.module}/scripts/configStorageClass.sh destroy"
+
+    environment = {
+      KUBECONFIG = self.triggers.kubeconfig
+    }
+  }
+}*/
+
+resource "null_resource" "deploy_storageclass" {
+  count = var.turbo_storage_class_provision ? 1 : 0
+  triggers = {
+    storname = var.turbo_storage_class_name
+    kubeconfig = var.cluster_config_file
+  }
+
+  provisioner "local-exec" {
+    command = "${path.module}/scripts/createStorageClass.sh ${self.triggers.storname}"
+
+      environment = {
+      KUBECONFIG = self.triggers.kubeconfig
+    }
+  }
+
+  provisioner "local-exec" {
+    when = destroy
+    command = "${path.module}/scripts/destroyStorageClass.sh"
 
     environment = {
       KUBECONFIG = self.triggers.kubeconfig
@@ -115,14 +140,14 @@ resource "null_resource" "deploy_operator" {
 resource "null_resource" "deploy_instance" {
   depends_on = [null_resource.deploy_operator]
   triggers = {
-    kubeconfig = var.cluster_config_file
     namespace = var.turbo_namespace
-    //probes = "${join(",", var.turbo_probes)}"
     probes = join(",", var.turbo_probes)
+    storname = var.turbo_storage_class_name
+    kubeconfig = var.cluster_config_file
   }
 
   provisioner "local-exec" {
-    command = "${path.module}/scripts/deployInstance.sh ${self.triggers.namespace} '${self.triggers.probes}'"
+    command = "${path.module}/scripts/deployInstance.sh ${self.triggers.namespace} '${self.triggers.probes}' ${self.triggers.storname}"
 
     environment = {
       KUBECONFIG = self.triggers.kubeconfig
@@ -131,7 +156,7 @@ resource "null_resource" "deploy_instance" {
 
   provisioner "local-exec" {
     when = destroy
-    command = "${path.module}/scripts/deployInstance.sh ${self.triggers.namespace} '${self.triggers.probes}' destroy"
+    command = "${path.module}/scripts/deployInstance.sh ${self.triggers.namespace} '${self.triggers.probes}' ${self.triggers.storname} destroy"
 
     environment = {
       KUBECONFIG = self.triggers.kubeconfig
