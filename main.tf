@@ -60,7 +60,6 @@ resource "null_resource" "deploy_storageclass" {
 }
 
 resource "null_resource" "deploy_ClusterRole" {
-  depends_on = [null_resource.deploy_storageclass]
   triggers = {
     kubeconfig = var.cluster_config_file
   }
@@ -84,7 +83,7 @@ resource "null_resource" "deploy_ClusterRole" {
 } 
 
 resource "null_resource" "add_scc" {
-  depends_on = [null_resource.deploy_storageclass, null_resource.deploy_ClusterRole]
+  depends_on = [null_resource.deploy_ClusterRole]
   triggers = {
     kubeconfig = var.cluster_config_file
     namespace = var.turbo_namespace
@@ -112,7 +111,7 @@ resource "null_resource" "add_scc" {
 } 
 
 resource "null_resource" "deploy_operator" {
-  depends_on = [null_resource.add_scc, null_resource.deploy_ClusterRole]
+  depends_on = [null_resource.add_scc]
   triggers = {
     kubeconfig = var.cluster_config_file
     namespace = var.turbo_namespace
