@@ -24,7 +24,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: t8c-operator
 subjects:
- - kind: ServiceAccount
+- kind: ServiceAccount
   name: ${SANAME}
   namespace: ${NAMESPACE}
 roleRef:
