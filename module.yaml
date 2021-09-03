@@ -8,8 +8,6 @@ tags:
     - lint
 versions:
 - platforms:
-    - kubernetes
-    - ocp3
     - ocp4
   dependencies:
     - id: cluster
@@ -46,8 +44,6 @@ versions:
         id: namespace
         output: name
         discriminator: tools
-    - name: turbo_namespace
-      scope: global
       name: mode
       scope: global
     - name: gitops_dir

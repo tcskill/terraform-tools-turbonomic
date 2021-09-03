@@ -10,29 +10,6 @@ module setup_clis {
   clis = ["helm"]
 }
 
-/*resource "null_resource" "deploy_storageclass" {
-
-  triggers = {
-    kubeconfig = var.cluster_config_file
-  }
-
-  provisioner "local-exec" {
-    command = "${path.module}/scripts/configStorageClass.sh"
-
-      environment = {
-      KUBECONFIG = self.triggers.kubeconfig
-    }
-  }
-
-  provisioner "local-exec" {
-    when = destroy
-    command = "${path.module}/scripts/configStorageClass.sh destroy"
-
-    environment = {
-      KUBECONFIG = self.triggers.kubeconfig
-    }
-  }
-}*/
 
 resource "null_resource" "deploy_storageclass" {
   count = var.turbo_storage_class_provision ? 1 : 0
@@ -61,11 +38,13 @@ resource "null_resource" "deploy_storageclass" {
 
 resource "null_resource" "deploy_ClusterRole" {
   triggers = {
+    namespace = var.turbo_namespace
+    tsaname = var.turbo_service_account_name
     kubeconfig = var.cluster_config_file
   }
 
   provisioner "local-exec" {
-    command = "${path.module}/scripts/configClusterRole.sh"
+    command = "${path.module}/scripts/configClusterRole.sh ${self.triggers.tsaname} ${self.triggers.namespace}"
 
     environment = {
       KUBECONFIG = self.triggers.kubeconfig
@@ -74,7 +53,7 @@ resource "null_resource" "deploy_ClusterRole" {
 
   provisioner "local-exec" {
     when = destroy
-    command = "${path.module}/scripts/configClusterRole.sh destroy"
+    command = "${path.module}/scripts/configClusterRole.sh ${self.triggers.tsaname} ${self.triggers.namespace} destroy"
 
     environment = {
       KUBECONFIG = self.triggers.kubeconfig

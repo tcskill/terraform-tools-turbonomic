@@ -9,12 +9,6 @@ variable "releases_namespace" {
   description = "Name of the existing namespace where the Helm Releases will be deployed."
 }
 
-variable "turbo_namespace" {
-  type        = string
-  description = "Name of the existing namespace where turbo will be deployed."
-  default     = "turbonomic"
-}
-
 variable "cluster_ingress_hostname" {
   type        = string
   description = "Ingress hostname of the IKS cluster."
@@ -35,30 +29,6 @@ variable "helm_version" {
   description = "The version of the helm chart that should be used"
   type        = string
   default     = "6.4.1"
-}
-
-variable "turbo_service_account_name" {
-  description = "The name of the service account that should be used for the deployment"
-  type        = string
-  default     = "t8c-operator"
-}
-
-variable "turbo_probes" {
-  description = "The probes to deploy with turbonomic"
-  type        = list(string)
-  default     = ["kubeturbo","instana","openshiftingress"]
-}
-
-variable "turbo_storage_class_provision" {
-  description = "Flag indicating that an ibm block custom storage class should be created and used"
-  type        = bool
-  default     = true
-}
-
-variable "turbo_storage_class_name" {
-  description = "Name of the storage class to use"
-  type        = string
-  default     = "ibmc-vpc-block-10iops-mzr"
 }
 
 variable "plugins" {
@@ -122,4 +92,34 @@ variable "mode" {
   type        = string
   description = "The mode of operation for the module (setup)"
   default     = ""
+}
+
+variable "turbo_service_account_name" {
+  description = "The name of the service account that should be used for the deployment"
+  type        = string
+  default     = "t8c-operator"
+}
+
+variable "turbo_probes" {
+  description = "The probes to deploy with turbonomic"
+  type        = list(string)
+  default     = ["kubeturbo","instana","openshiftingress"]
+}
+
+variable "turbo_storage_class_provision" {
+  description = "Flag indicating that an ibm block custom storage class should be created and used"
+  type        = bool
+  default     = true
+}
+
+variable "turbo_storage_class_name" {
+  description = "Name of the storage class to use"
+  type        = string
+  default     = "ibmc-vpc-block-10iops-mzr"
+}
+
+variable "turbo_namespace" {
+  type        = string
+  description = "Name of the existing namespace where turbo will be deployed."
+  default     = "turbonomic"
 }

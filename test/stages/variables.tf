@@ -413,12 +413,12 @@ variable "tekton_provision" {
 variable "turbo_namespace" {
   type = string
   description = "The namespace that should be created"
-  default = "turbonomic"
+  default = ""
 }
 variable "turbo_service_account_name" {
   type = string
   description = "The namespace that should be created"
-  default = "t8c-operator"
+  default = ""
 }
 variable "turbo_probes" {
   description = "The probes to deploy with turbonomic"
