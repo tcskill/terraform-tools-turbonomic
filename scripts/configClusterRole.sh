@@ -24,14 +24,14 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: t8c-operator
 subjects:
-- kind: ServiceAccount
+ - kind: ServiceAccount
   name: ${SANAME}
   namespace: ${NAMESPACE}
 roleRef:
   kind: ClusterRole
   name: t8c-operator
   apiGroup: rbac.authorization.k8s.io
-EOL    
+EOL
     kubectl create -f "${TMP_DIR}/cluster_role_binding.yaml"
 fi
 
