@@ -16,7 +16,6 @@ if [[ "$3" == "destroy" ]]; then
     kubectl delete -f "${CHARTS_DIR}/cluster_role.yaml"
 else 
     kubectl create -f "${CHARTS_DIR}/cluster_role.yaml"
-    
     #build cluster role binding
     cat > "${TMP_DIR}/cluster_role_binding.yaml" << EOL
 kind: ClusterRoleBinding
