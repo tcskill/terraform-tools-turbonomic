@@ -1,15 +1,12 @@
 #  TR-TEST terraform module
 
-![Verify and release module](https://github.com/ibm-garage-cloud/blahblah-tools-sonarqube/workflows/Verify%20and%20release%20module/badge.svg)
+![Verify and release module]
 
-Deploys blahblah into the cluster using the helm chart. By default, blahblah  s instance is deployed
-into the cluster as well to support the blahblah instance.
+Deploys Turbonomic operator into the cluster and creates an instance. By default, the kubeturbo probe is also installed into the cluster along with the OpenShift ingress.  Other probes to deploy can be specified in the turbo_probes variable.
 
 ## Supported platforms
 
-- IKS????
-- OCP 3.11???
-- OCP 4.3
+- OCP 4.6+
 
 ## Module dependencies
 
@@ -17,36 +14,33 @@ The module uses the following elements
 
 ### Terraform providers
 
-- helm - used to install the artifactory and artifactory-config helm charts
-- null - used to run the shell script to create the route on openshift
+- helm - used to configure the scc for OpenShift
+- null - used to run the shell scripts
 
 ### Environment
 
 - kubectl - used to apply the yaml to create the route
-- kustomize - used to patch the deployment with the service account
 
 ## Suggested companion modules
 
 The module itself requires some information from the cluster and needs a
-namespace and service account to have been created. The following companion
+namespace to be created. The following companion
 modules can help provide the required information:
 
 - Cluster - https://github.com/ibm-garage-cloud/terraform-cluster-ibmcloud
 - Namespace - https://github.com/ibm-garage-cloud/terraform-cluster-namespace
-- ServiceAccount - https://github.com/ibm-garage-cloud/terraform-cluster-serviceaccount
-- (optional) Postgresql - https://github.com/ibm-garage-cloud/garage-terraform-modules.git//cloud-managed/services/postgres
+
 
 ## Example usage
 
 ```hcl-terraform
-module "dev_tools_sonarqube" {
-  source = "github.com/blahblah?ref=v1.0.0"
+module "dev_tools_turbonomic" {
+  source = "github.com/tcskill/terraform-tools-turbonomic?ref=v1.0.0"
 
   cluster_type             = var.cluster_type
   cluster_ingress_hostname = module.dev_cluster.ingress_hostname
   cluster_config_file      = module.dev_cluster.config_file_path
   releases_namespace       = module.dev_cluster_namespaces.tools_namespace_name
-  service_account_name     = module.dev_serviceaccount_blahblah.name
   tls_secret_name          = module.dev_cluster.tls_secret_name
 }
 ```
