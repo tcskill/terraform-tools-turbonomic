@@ -67,7 +67,6 @@ resource "null_resource" "add_scc" {
     kubeconfig = var.cluster_config_file
     namespace = var.turbo_namespace
     tsaname = var.turbo_service_account_name
-    tmp_dir      = "${path.cwd}/.tmp"
     bin_dir = module.setup_clis.bin_dir
   }
 
