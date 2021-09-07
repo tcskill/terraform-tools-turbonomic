@@ -1,4 +1,4 @@
-#  TR-TEST terraform module
+#  Turbonomic terraform module
 
 Deploys Turbonomic operator into the cluster and creates an instance. By default, the kubeturbo probe is also installed into the cluster along with the OpenShift ingress.  Other probes to deploy can be specified in the turbo_probes variable.
 
