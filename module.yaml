@@ -39,14 +39,3 @@ versions:
       moduleRef:
         id: cluster
         output: platform.tls_secret
-    - name: namespace
-      moduleRef:
-        id: namespace
-        output: name
-        discriminator: tools
-      name: mode
-      scope: global
-    - name: gitops_dir
-      scope: global
-    - name: plugins
-      scope: ignore

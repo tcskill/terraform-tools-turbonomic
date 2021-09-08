@@ -5,6 +5,5 @@ module "tools_turbo" {
   cluster_type             = module.dev_cluster.platform.type_code
   cluster_ingress_hostname = module.dev_cluster.platform.ingress
   tls_secret_name          = module.dev_cluster.platform.tls_secret
-  namespace                = module.dev_capture_state.namespace
-
+  
 }
