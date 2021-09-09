@@ -10,7 +10,7 @@ fi
 export KUBECONFIG
 
 #wait for pods to start
-wait 5m
+wait 15s
 
 NAMESPACE=$(echo "var.turbo_namespace" | terraform console -var-file variables.tf)
 
