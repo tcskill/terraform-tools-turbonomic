@@ -12,7 +12,7 @@ export KUBECONFIG
 #wait for pods to start
 sleep 5m
 
-kubectl rollout status deployment/rsyslog -n
+kubectl rollout status deployment/rsyslog
 if [[ "$?" -ne 0 ]]; then
     echo "turbo deployment failed with exit code $?"
     exit 1
