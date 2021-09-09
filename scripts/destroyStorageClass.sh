@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-if [[ -z "${TMP_DIR}" ]]; then
-    TMP_DIR=".tmp"
-fi
-mkdir -p "${TMP_DIR}"
+CHARTS_DIR=$(cd $(dirname $0)/../charts; pwd -P)
 
-kubectl delete -f "${TMP_DIR}/customStorageClass.yaml"
+kubectl delete -f "${CHARTS_DIR}/customStorageClass.yaml"

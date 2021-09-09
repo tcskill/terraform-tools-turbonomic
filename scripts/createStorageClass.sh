@@ -1,13 +1,10 @@
 #!/usr/bin/env bash
 
-if [[ -z "${TMP_DIR}" ]]; then
-    TMP_DIR=".tmp"
-fi
-mkdir -p "${TMP_DIR}"
+CHARTS_DIR=$(cd $(dirname $0)/../charts; pwd -P)
 
 STOR_NAME="$1"
 
-cat > "${TMP_DIR}/customStorageClass.yaml" << EOL
+cat > "${CHARTS_DIR}/customStorageClass.yaml" << EOL
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
@@ -84,4 +81,4 @@ reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer
 EOL
 
-kubectl create -f "${TMP_DIR}/customStorageClass.yaml"
+kubectl create -f "${CHARTS_DIR}/customStorageClass.yaml"
