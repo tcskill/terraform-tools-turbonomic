@@ -33,7 +33,7 @@ modules can help provide the required information:
 
 ```hcl-terraform
 module "dev_tools_turbonomic" {
-  source = "github.com/tcskill/terraform-tools-turbonomic?ref=v1.0.0"
+  source = "github.com/cloud-native-toolkit/terraform-tools-turbonomic?ref=v1.0.0"
 
   cluster_type             = var.cluster_type
   cluster_ingress_hostname = module.dev_cluster.ingress_hostname
