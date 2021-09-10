@@ -7,8 +7,8 @@ CHARTS_DIR=$(cd $(dirname $0)/../charts; pwd -P)
 if [[ "$3" == "destroy" ]]; then
     echo "removing chart extension..."
     # remove the the operator and chart extensions
-    kubectl delete -f "${CHARTS_DIR}/operator.yaml" -n ${NAMESPACE} --validate=false
-    kubectl delete -f "${CHARTS_DIR}/charts_v1alpha1_xl_crd.yaml" 
+    kubectl delete Deployment t8c-operator
+    kubectl delete CustomResourceDefinition xls.charts.helm.k8s.io
 else 
     # deploy the chart extensions needed
     kubectl create -f "${CHARTS_DIR}/charts_v1alpha1_xl_crd.yaml"
@@ -63,7 +63,7 @@ spec:
       - name: operator-tmpfs0
         emptyDir: {}
 EOL
-    kubectl create -f "${CHARTS_DIR}/operator.yaml" -n ${NAMESPACE} --validate=false
+    kubectl create -f "${CHARTS_DIR}/operator.yaml" -n ${NAMESPACE}
 fi
 
 
