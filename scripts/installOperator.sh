@@ -7,7 +7,7 @@ CHARTS_DIR=$(cd $(dirname $0)/../charts; pwd -P)
 if [[ "$3" == "destroy" ]]; then
     echo "removing chart extension..."
     # remove the the operator and chart extensions
-    kubectl delete Deployment t8c-operator
+    kubectl delete Deployment t8c-operator -n ${NAMESPACE}
     kubectl delete CustomResourceDefinition xls.charts.helm.k8s.io
 else 
     # deploy the chart extensions needed
