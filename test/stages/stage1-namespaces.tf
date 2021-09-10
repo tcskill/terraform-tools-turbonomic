@@ -5,3 +5,10 @@ module "dev_tools_namespace" {
   name                     = var.turbo_namespace
   create_operator_group    = true
 }
+
+
+resource null_resource write_namespace {
+  provisioner "local-exec" {
+    command = "echo '${var.turbo_namespace}' > ${path.cwd}/turbo_namespace"
+  }
+}

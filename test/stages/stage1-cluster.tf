@@ -15,3 +15,9 @@ module "dev_cluster" {
   vpc_subnets             = []
 
 }
+
+resource null_resource write_kubeconfig {
+  provisioner "local-exec" {
+    command = "echo '${module.dev_cluster.platform.kubeconfig}' > ${path.cwd}/kubeconfig"
+  }
+}
