@@ -5,6 +5,12 @@
 
 Deploys Turbonomic operator into the cluster and creates an instance. By default, the kubeturbo probe is also installed into the cluster along with the OpenShift ingress.  Other probes to deploy can be specified in the turbo_probes variable, by default it will deploy:  turboprobe, openshift ingress, and instana.  The namespace to deploy within the cluster is defined in the variables, default is Turbonomic.  Also note if deploying on mzr cluster you'll need the custom storage created, default is true to create this automatically, if not mzr you can set to false and use whatever storage class you'd like.
 
+### Supported Component Selector Probe Types 
+Use these names in the `turbo_probes` variable to define additional probes as needed for your environment:
+```
+"kubeturbo","instana","openshiftingress", "aws", "azure", "prometheus", "servicenow", "tomcat", "jvm", "websphere", "weblogic"
+```
+
 ## Supported platforms
 
 - OCP 4.6+
