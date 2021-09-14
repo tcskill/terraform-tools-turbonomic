@@ -51,6 +51,78 @@ EOL
     enabled: true
 EOL
     fi
+
+    if [[ "${PROBES}" =~ aws ]]; then
+      echo "adding aws probe..."
+      cat >> ${CHARTS_DIR}/xl-release.yaml << EOL
+  
+  aws:
+    enabled: true
+EOL
+    fi
+
+    if [[ "${PROBES}" =~ azure ]]; then
+      echo "adding azure probe..."
+      cat >> ${CHARTS_DIR}/xl-release.yaml << EOL
+  
+  azure:
+    enabled: true
+EOL
+    fi
+
+    if [[ "${PROBES}" =~ prometheus ]]; then
+      echo "adding prometheus probe..."
+      cat >> ${CHARTS_DIR}/xl-release.yaml << EOL
+  
+  prometheus:
+    enabled: true
+EOL
+    fi
+
+    if [[ "${PROBES}" =~ servicenow ]]; then
+      echo "adding servicenow probe..."
+      cat >> ${CHARTS_DIR}/xl-release.yaml << EOL
+  
+  servicenow:
+    enabled: true
+EOL
+    fi
+
+    if [[ "${PROBES}" =~ tomcat ]]; then
+      echo "adding tomcat probe..."
+      cat >> ${CHARTS_DIR}/xl-release.yaml << EOL
+  
+  tomcat:
+    enabled: true
+EOL
+    fi
+
+    if [[ "${PROBES}" =~ jvm ]]; then
+      echo "adding jvm probe..."
+      cat >> ${CHARTS_DIR}/xl-release.yaml << EOL
+  
+  jvm:
+    enabled: true
+EOL
+    fi
+
+    if [[ "${PROBES}" =~ websphere ]]; then
+      echo "adding websphere probe..."
+      cat >> ${CHARTS_DIR}/xl-release.yaml << EOL
+  
+  websphere:
+    enabled: true
+EOL
+    fi
+
+    if [[ "${PROBES}" =~ weblogic ]]; then
+      echo "adding weblogic probe..."
+      cat >> ${CHARTS_DIR}/xl-release.yaml << EOL
+  
+  weblogic:
+    enabled: true
+EOL
+    fi
     # deploy the release
     kubectl apply -f "${CHARTS_DIR}/xl-release.yaml" -n ${NAMESPACE}
 
