@@ -28,7 +28,7 @@ resource "null_resource" "deploy_storageclass" {
 
   provisioner "local-exec" {
     when = destroy
-    command = "${path.module}/scripts/destroyStorageClass.sh"
+    command = "${path.module}/scripts/destroyStorageClass.sh ${self.triggers.storname}"
 
     environment = {
       KUBECONFIG = self.triggers.kubeconfig
