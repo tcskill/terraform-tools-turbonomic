@@ -51,6 +51,13 @@ variable "turbo_storage_class_provision" {
   type        = bool
   default     = true
 }
+
+variable "turbo_cluster_is_vpc" {
+  type        = bool
+  description = "Set to false if installing on ibm classic cluster, true for vpc cluster"
+  default     = true
+}
+
 variable "turbo_storage_class_name" {
   description = "Name of the storage class to use"
   type        = string

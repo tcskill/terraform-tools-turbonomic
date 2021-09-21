@@ -16,10 +16,11 @@ resource "null_resource" "deploy_storageclass" {
   triggers = {
     storname = var.turbo_storage_class_name
     kubeconfig = var.cluster_config_file
+    isvpc = var.turbo_cluster_is_vpc ? 1 : 0
   }
 
   provisioner "local-exec" {
-    command = "${path.module}/scripts/createStorageClass.sh ${self.triggers.storname}"
+    command = "${path.module}/scripts/createStorageClass.sh ${self.triggers.storname} ${self.triggers.isvpc}"
 
       environment = {
       KUBECONFIG = self.triggers.kubeconfig

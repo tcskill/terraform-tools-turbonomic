@@ -3,7 +3,7 @@
 ![Verify and release module](https://github.com/cloud-native-toolkit/terraform-tools-turbonomic/workflows/Verify%20and%20release%20module/badge.svg)
 
 
-Deploys Turbonomic operator into the cluster and creates an instance. By default, the kubeturbo probe is also installed into the cluster along with the OpenShift ingress.  Other probes to deploy can be specified in the turbo_probes variable, by default it will deploy:  turboprobe, openshift ingress, and instana.  The namespace to deploy within the cluster is defined in the variables, default is Turbonomic.  Also note if deploying on mzr cluster you'll need the custom storage created, default is true to create this automatically, if not mzr you can set to false and use another storage class you'd like.
+Deploys Turbonomic operator into the cluster and creates an instance. By default, the kubeturbo probe is also installed into the cluster along with the OpenShift ingress.  Other probes to deploy can be specified in the turbo_probes variable, by default it will deploy:  turboprobe, openshift ingress, and instana.  The namespace to deploy within the cluster is defined in the variables, default is Turbonomic.  Also note if deploying on mzr cluster you'll need the custom storage created, default is true to create this automatically, if not mzr you can set to false and use another storage class you'd like.  
 
 ### Supported Component Selector Probe Types 
 Use these names in the `turbo_probes` variable to define additional probes as needed for your environment:
@@ -34,7 +34,8 @@ The module itself requires some information from the cluster and needs a
 namespace to be created. The following companion
 modules can help provide the required information:
 
-- Cluster - https://github.com/ibm-garage-cloud/terraform-cluster-ibmcloud
+- IBM VPC Cluster - https://github.com/cloud-native-toolkit/terraform-ibm-ocp-vpc
+- IBM Classic Cluster - https://github.com/cloud-native-toolkit/terraform-k8s-ocp-cluster
 - Namespace - https://github.com/ibm-garage-cloud/terraform-cluster-namespace
 
 
@@ -51,4 +52,3 @@ module "dev_tools_turbonomic" {
   tls_secret_name          = module.dev_cluster.tls_secret_name
 }
 ```
-

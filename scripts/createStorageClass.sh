@@ -3,6 +3,9 @@
 CHARTS_DIR=$(cd $(dirname $0)/../charts; pwd -P)
 
 STOR_NAME="$1"
+ISVPC="$2"
+
+if [[ "${ISVPC}" = 1 ]]; then
 
 cat > "${CHARTS_DIR}/customStorageClass.yaml" << EOL
 kind: StorageClass
@@ -80,5 +83,62 @@ parameters:
 reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer
 EOL
+else
+cat > "${CHARTS_DIR}/customStorageClass.yaml" << EOL
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: ${STOR_NAME}
+  selfLink: /apis/storage.k8s.io/v1/storageclasses/${STOR_NAME}
+  uid: 95f79f63-65a2-4529-a597-9a113c833436
+  resourceVersion: '15951408'
+  labels:
+    app: ibmcloud-block-storage-plugin
+    chart: ibmcloud-block-storage-plugin-1.7.1
+    heritage: Helm
+    release: release-name
+  annotations:
+    storageclass.kubernetes.io/is-default-class: 'false'
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: storage.k8s.io/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:allowVolumeExpansion': {}
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:storageclass.kubernetes.io/is-default-class': {}
+          'f:labels':
+            .: {}
+            'f:app': {}
+            'f:chart': {}
+            'f:heritage': {}
+            'f:release': {}
+        'f:parameters':
+          .: {}
+          'f:billingType': {}
+          'f:classVersion': {}
+          'f:fsType': {}
+          'f:iopsPerGB': {}
+          'f:sizeRange': {}
+          'f:type': {}
+        'f:provisioner': {}
+        'f:reclaimPolicy': {}
+        'f:volumeBindingMode': {}
+provisioner: ibm.io/ibmc-block
+parameters:
+  billingType: hourly
+  classVersion: '2'
+  fsType: ext4
+  iopsPerGB: '10'
+  sizeRange: '[20-4000]Gi'
+  type: Endurance
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer
+EOL
+fi
 
 kubectl create -f "${CHARTS_DIR}/customStorageClass.yaml"
