@@ -41,13 +41,11 @@ variable "turbo_storage_class_provision" {
 variable "turbo_storage_class_name" {
   description = "Name of the storage class to use, default is for vpc clusters"
   type        = string
-  default     = "ibmc-vpc-block-10iops-mzr"
 }
 
 variable "turbo_cluster_is_vpc" {
   type        = bool
   description = "Set to false if installing on ibm classic cluster, true for vpc cluster"
-  default     = true
 }
 
 variable "turbo_namespace" {

@@ -6,7 +6,7 @@ STOR_NAME="$1"
 ISVPC="$2"
 
 if [[ "${ISVPC}" = 1 ]]; then
-
+echo "creating storage class for VPC"
 cat > "${CHARTS_DIR}/customStorageClass.yaml" << EOL
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
@@ -84,6 +84,7 @@ reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer
 EOL
 else
+echo "creating storage class for Classic Cluster"
 cat > "${CHARTS_DIR}/customStorageClass.yaml" << EOL
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
