@@ -23,7 +23,7 @@ variable "tls_secret_name" {
 variable "turbo_service_account_name" {
   description = "The name of the service account that should be used for the deployment"
   type        = string
-  default     = "turbo-user"
+  default     = "t8c-operator"
 }
 
 variable "turbo_probes" {
