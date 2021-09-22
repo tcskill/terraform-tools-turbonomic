@@ -30,11 +30,11 @@ variable "name_prefix" {
   description = "Prefix name that should be used for the cluster and services. If not provided then resource_group_name will be used"
   default     = ""
 }
-/*
+
 variable "turbo_namespace" {
   type = string
   description = "The namespace that should be created"
-  default = "turbonomic"
+ // default = "turbonomic"
 }
 variable "turbo_service_account_name" {
   type = string
@@ -44,22 +44,22 @@ variable "turbo_service_account_name" {
 variable "turbo_probes" {
   description = "The probes to deploy with turbonomic"
   type        = list(string)
-  default     = ["kubeturbo","instana","openshiftingress"]
+  //default     = ["kubeturbo","instana","openshiftingress"]
 }
 variable "turbo_storage_class_provision" {
   description = "Flag indicating that an ibm block custom storage class should be created and used"
   type        = bool
-  default     = true
+ // default     = true
 }
 
 variable "turbo_cluster_is_vpc" {
   type        = bool
   description = "Set to false if installing on ibm classic cluster, true for vpc cluster"
-  default     = true
+  //default     = true
 }
 
 variable "turbo_storage_class_name" {
   description = "Name of the storage class to use"
   type        = string
-  default     = "ibmc-vpc-block-10iops-mzr"
-} */
+ // default     = "ibmc-vpc-block-10iops-mzr"
+} 
