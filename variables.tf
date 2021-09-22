@@ -29,13 +29,13 @@ variable "turbo_service_account_name" {
 variable "turbo_probes" {
   description = "The probes to deploy with turbonomic"
   type        = list(string)
- // default     = ["kubeturbo","instana","openshiftingress"]
+  default     = ["kubeturbo","instana","openshiftingress"]
 }
 
 variable "turbo_storage_class_provision" {
   description = "Flag indicating that an ibm block custom storage class should be created and used"
   type        = bool
- // default     = true
+  default     = true
 }
 
 variable "turbo_storage_class_name" {
@@ -51,5 +51,5 @@ variable "turbo_cluster_is_vpc" {
 variable "turbo_namespace" {
   type        = string
   description = "Name of the existing namespace where turbo will be deployed."
- // default     = "turbonomic"
+  default     = "turbonomic"
 }

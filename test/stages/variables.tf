@@ -31,21 +31,24 @@ variable "name_prefix" {
   default     = ""
 }
 
-variable "turbo_namespace" {
+/* variable "turbo_namespace" {
   type = string
   description = "The namespace that should be created"
   default = "turbonomic"
 }
+
 variable "turbo_service_account_name" {
   type = string
   description = "The namespace that should be created"
   default = "t8c-operator"
 }
+
 variable "turbo_probes" {
   description = "The probes to deploy with turbonomic"
   type        = list(string)
   default     = ["kubeturbo","instana","openshiftingress"]
 }
+
 variable "turbo_storage_class_provision" {
   description = "Flag indicating that an ibm block custom storage class should be created and used"
   type        = bool
@@ -62,4 +65,4 @@ variable "turbo_storage_class_name" {
   description = "Name of the storage class to use"
   type        = string
   default     = "ibmc-block-custom-10iops-mzr"
-} 
+} */
