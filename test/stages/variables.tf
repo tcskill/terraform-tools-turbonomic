@@ -31,7 +31,7 @@ variable "name_prefix" {
   default     = ""
 }
 
-/* variable "turbo_namespace" {
+ variable "turbo_namespace" {
   type = string
   description = "The namespace that should be created"
   default = "turbonomic"
@@ -65,4 +65,4 @@ variable "turbo_storage_class_name" {
   description = "Name of the storage class to use"
   type        = string
   default     = "ibmc-block-custom-10iops-mzr"
-} */
+} 
