@@ -3,9 +3,10 @@
 NAMESPACE="$1"
 PROBES="$2"
 STOR_NAME="$3"
+SANAME="$4"
 CHARTS_DIR=$(cd $(dirname $0)/../charts; pwd -P)
 
-if [[ "$4" == "destroy" ]]; then
+if [[ "$5" == "destroy" ]]; then
     echo "removing xl-release..."
     # remove the the release
     kubectl delete -f "${CHARTS_DIR}/xl-release.yaml" -n ${NAMESPACE}
@@ -21,7 +22,7 @@ spec:
     tag: 8.2.3
     externalArangoDBName: arango.turbo.svc.cluster.local
     storageClassName: ${STOR_NAME}
-    serviceAccountName:  t8c-operator
+    serviceAccountName:  ${SANAME}
 
 EOL
 
