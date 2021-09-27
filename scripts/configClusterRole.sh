@@ -118,7 +118,7 @@ rules:
 - apiGroups:
     - security.openshift.io
   resourceNames:
-    - restricted
+    - ${NAMESPACE}-${SANAME}-anyuid
   resources:
     - securitycontextconstraints
   verbs:

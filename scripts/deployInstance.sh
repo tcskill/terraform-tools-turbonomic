@@ -21,6 +21,7 @@ spec:
     tag: 8.2.3
     externalArangoDBName: arango.turbo.svc.cluster.local
     storageClassName: ${STOR_NAME}
+    serviceAccountName:  t8c-operator
 
 EOL
 
