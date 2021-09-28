@@ -121,10 +121,11 @@ resource "null_resource" "deploy_instance" {
     probes = join(",", var.turbo_probes)
     storname = var.turbo_storage_class_name
     kubeconfig = var.cluster_config_file
+    tsaname = var.turbo_service_account_name
   }
 
   provisioner "local-exec" {
-    command = "${path.module}/scripts/deployInstance.sh ${self.triggers.namespace} '${self.triggers.probes}' ${self.triggers.storname}"
+    command = "${path.module}/scripts/deployInstance.sh ${self.triggers.namespace} '${self.triggers.probes}' ${self.triggers.storname} ${self.triggers.tsaname}"
 
     environment = {
       KUBECONFIG = self.triggers.kubeconfig
@@ -133,7 +134,7 @@ resource "null_resource" "deploy_instance" {
 
   provisioner "local-exec" {
     when = destroy
-    command = "${path.module}/scripts/deployInstance.sh ${self.triggers.namespace} '${self.triggers.probes}' ${self.triggers.storname} destroy"
+    command = "${path.module}/scripts/deployInstance.sh ${self.triggers.namespace} '${self.triggers.probes}' ${self.triggers.storname} ${self.triggers.tsaname} destroy"
 
     environment = {
       KUBECONFIG = self.triggers.kubeconfig
