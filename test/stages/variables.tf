@@ -36,3 +36,9 @@ variable "name_prefix" {
   default     = ""
 }
 
+variable "turbo_namespace" {
+  type        = string
+  description = "Name of the existing namespace where turbo will be deployed."
+  default     = "turbonomic"
+}
+
