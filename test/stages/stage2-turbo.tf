@@ -7,5 +7,6 @@ module "tools_turbo" {
   tls_secret_name          = module.dev_cluster.platform.tls_secret
   
   turbo_namespace = module.dev_tools_namespace.name
-
+  turbo_storage_class_provision = true
+  
 }
