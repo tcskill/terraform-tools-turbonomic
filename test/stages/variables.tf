@@ -4,6 +4,11 @@ variable "resource_group_name" {
   description = "Existing resource group where the IKS cluster will be provisioned."
 }
 
+variable "new_resource_group_name" {
+  type        = string
+  description = "Existing resource group where the IKS cluster will be provisioned."
+}
+
 variable "ibmcloud_api_key" {
   type        = string
   description = "The api key for IBM Cloud access"
@@ -32,27 +37,8 @@ variable "name_prefix" {
 }
 
 variable "turbo_namespace" {
-  type = string
-  description = "The namespace that should be created"
-  default = "turbonomic"
-}
-variable "turbo_service_account_name" {
-  type = string
-  description = "The namespace that should be created"
-  default = "t8c-operator"
-}
-variable "turbo_probes" {
-  description = "The probes to deploy with turbonomic"
-  type        = list(string)
-  default     = ["kubeturbo","instana","openshiftingress"]
-}
-variable "turbo_storage_class_provision" {
-  description = "Flag indicating that an ibm block custom storage class should be created and used"
-  type        = bool
-  default     = true
-}
-variable "turbo_storage_class_name" {
-  description = "Name of the storage class to use"
   type        = string
-  default     = "ibmc-vpc-block-10iops-mzr"
+  description = "Name of the existing namespace where turbo will be deployed."
+  default     = "turbonomic"
 }
+

@@ -11,7 +11,7 @@ if [[ "$3" == "destroy" ]]; then
     kubectl delete CustomResourceDefinition xls.charts.helm.k8s.io
 else 
     # deploy the chart extensions needed
-    kubectl create -f "${CHARTS_DIR}/charts_v1alpha1_xl_crd.yaml"
+    kubectl create -f "${CHARTS_DIR}/charts.helm.k8s.io_xls.yaml"
 
     # create the yaml for operator deployment and deploy it
 

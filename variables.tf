@@ -35,11 +35,10 @@ variable "turbo_probes" {
 variable "turbo_storage_class_provision" {
   description = "Flag indicating that an ibm block custom storage class should be created and used"
   type        = bool
-  default     = true
 }
 
 variable "turbo_storage_class_name" {
-  description = "Name of the storage class to use"
+  description = "Name of the storage class (either to create or use)"
   type        = string
   default     = "ibmc-vpc-block-10iops-mzr"
 }
