@@ -8,8 +8,16 @@ CHARTS_DIR=$(cd $(dirname $0)/../charts; pwd -P)
 
 if [[ "$5" == "destroy" ]]; then
     echo "removing xl-release..."
-    # remove the the release
-    kubectl delete -f "${CHARTS_DIR}/xl-release.yaml" -n ${NAMESPACE}
+    kubectl delete Xl xl-release -n ${NAMESPACE} >/dev/null 2>&1 &
+
+    # In the case that Kubernetes hangs on deleting the XL instance, set the finalizer to null which will force delete the XL instance this is a known issue with latest release
+    resp=$(kubectl get xl/xl-release -n ${NAMESPACE} --no-headers 2>/dev/null | wc -l)
+
+    if [[ "${resp}" != "0" ]]; then
+        echo "patching instance..."
+        kubectl patch xl/xl-release -p '{"metadata":{"finalizers":[]}}' --type=merge -n ${NAMESPACE} 2>/dev/null
+    fi
+
 else 
     cat > "${CHARTS_DIR}/xl-release.yaml" << EOL
 apiVersion: charts.helm.k8s.io/v1
