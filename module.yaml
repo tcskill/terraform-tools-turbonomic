@@ -39,3 +39,7 @@ versions:
       moduleRef:
         id: cluster
         output: platform.tls_secret
+    - name: turbo_namespace
+      moduleRef:
+        id: namespace
+        output: name
