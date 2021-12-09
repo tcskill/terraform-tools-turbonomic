@@ -6,7 +6,7 @@ module "tools_turbo" {
   cluster_ingress_hostname = module.dev_cluster.platform.ingress
   tls_secret_name          = module.dev_cluster.platform.tls_secret
   
-  turbo_namespace = module.dev_tools_namespace.name
-  turbo_storage_class_provision = true
-  
+  namespace = module.dev_tools_namespace.name
+  storage_class_provision = true
+  storage_class_name = "ibmc-vpc-block-10iops-mzr"
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 KUBECONFIG=$(cat ./kubeconfig)
-NAMESPACE=$(cat ./turbo_namespace)
+NAMESPACE=$(cat ./namespace)
 
 #wait for the deployments to finish
 sleep 4m

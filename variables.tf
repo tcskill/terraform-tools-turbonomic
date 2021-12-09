@@ -20,30 +20,29 @@ variable "tls_secret_name" {
   default = ""
 }
 
-variable "turbo_service_account_name" {
+variable "service_account_name" {
   description = "The name of the service account that should be used for the deployment"
   type        = string
   default     = "t8c-operator"
 }
 
-variable "turbo_probes" {
+variable "probes" {
   description = "The probes to deploy with turbonomic"
   type        = list(string)
   default     = ["kubeturbo","instana","openshiftingress"]
 }
 
-variable "turbo_storage_class_provision" {
+variable "storage_class_provision" {
   description = "Flag indicating that an ibm block custom storage class should be created and used"
   type        = bool
 }
 
-variable "turbo_storage_class_name" {
-  description = "Name of the storage class (either to create or use)"
+variable "storage_class_name" {
+  description = "Name of the block storage class to use - if multizone deployment then waitforfirstconsumer must be set on storageclass binding mode"
   type        = string
-  default     = "ibmc-vpc-block-10iops-mzr"
 }
 
-variable "turbo_namespace" {
+variable "namespace" {
   type        = string
   description = "Name of the existing namespace where turbo will be deployed."
   default     = "turbonomic"

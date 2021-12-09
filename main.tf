@@ -12,9 +12,9 @@ module setup_clis {
 
 
 resource "null_resource" "deploy_storageclass" {
-  count = var.turbo_storage_class_provision ? 1 : 0
+  count = var.storage_class_provision ? 1 : 0
   triggers = {
-    storname = var.turbo_storage_class_name
+    storname = var.storage_class_name
     kubeconfig = var.cluster_config_file
   }
 
@@ -38,8 +38,8 @@ resource "null_resource" "deploy_storageclass" {
 
 resource "null_resource" "deploy_ClusterRole" {
   triggers = {
-    namespace = var.turbo_namespace
-    tsaname = var.turbo_service_account_name
+    namespace = var.namespace
+    tsaname = var.service_account_name
     kubeconfig = var.cluster_config_file
   }
 
@@ -65,8 +65,8 @@ resource "null_resource" "add_scc" {
   depends_on = [null_resource.deploy_ClusterRole]
   triggers = {
     kubeconfig = var.cluster_config_file
-    namespace = var.turbo_namespace
-    tsaname = var.turbo_service_account_name
+    namespace = var.namespace
+    tsaname = var.service_account_name
     bin_dir = module.setup_clis.bin_dir
   }
 
@@ -92,8 +92,8 @@ resource "null_resource" "deploy_operator" {
   depends_on = [null_resource.add_scc]
   triggers = {
     kubeconfig = var.cluster_config_file
-    namespace = var.turbo_namespace
-    tsaname = var.turbo_service_account_name
+    namespace = var.namespace
+    tsaname = var.service_account_name
   }
 
   provisioner "local-exec" {
@@ -117,11 +117,11 @@ resource "null_resource" "deploy_operator" {
 resource "null_resource" "deploy_instance" {
   depends_on = [null_resource.deploy_operator]
   triggers = {
-    namespace = var.turbo_namespace
-    probes = join(",", var.turbo_probes)
-    storname = var.turbo_storage_class_name
+    namespace = var.namespace
+    probes = join(",", var.probes)
+    storname = var.storage_class_name
     kubeconfig = var.cluster_config_file
-    tsaname = var.turbo_service_account_name
+    tsaname = var.service_account_name
   }
 
   provisioner "local-exec" {
