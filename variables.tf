@@ -35,6 +35,7 @@ variable "probes" {
 variable "storage_class_provision" {
   description = "Flag indicating that an ibm block custom storage class should be created and used"
   type        = bool
+  default     = false
 }
 
 variable "storage_class_name" {
